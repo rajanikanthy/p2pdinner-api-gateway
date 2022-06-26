@@ -1,9 +1,8 @@
 spring:
   application:
     name: p2pdinner-api-gateway
-  cloud:
-    config:
-      uri: http://35.193.206.122
+  config:
+    import: "configserver:http://localhost:8888/"
 eureka:
   instance:
     instanceId: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
