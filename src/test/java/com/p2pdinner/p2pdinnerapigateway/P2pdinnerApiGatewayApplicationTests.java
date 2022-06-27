@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class P2pdinnerApiGatewayApplicationTests {
 
-	@Test
+
 	public void contextLoads() {
 	}
 
