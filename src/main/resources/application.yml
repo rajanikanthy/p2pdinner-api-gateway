@@ -1,8 +1,37 @@
+zuul:
+  routes:
+    profileService:
+      path: /p2pdinner-profile-services/**
+      serviceId: P2PDINNER-PROFILE-SERVICES
+      stripPrefix: false
+    catalogService:
+      path: /p2pdinner-menu-services/**
+      serviceId: P2PDINNER-MENU-SERVICES
+      stripPrefix: false
+server:
+  port: 0
 spring:
   application:
     name: p2pdinner-api-gateway
   config:
     import: "configserver:http://localhost:8888/"
+  cloud:
+    gateway:
+      routes:
+        - id : profileService
+          uri: lb://P2PDINNER-PROFILE-SERVICES
+          predicates:
+            - Path=/profile-service/**
+          filters:
+            - RewritePath=/profile-service(?<segment>/?.*), $\{segment}
+management:
+  endpoint:
+    health:
+      enabled: true
+    routes:
+      enabled: true
 eureka:
   instance:
     instanceId: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    fetchRegistry: true
